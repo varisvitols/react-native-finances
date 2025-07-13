@@ -1,6 +1,7 @@
 import express from 'express';
 import dontenv from 'dotenv';
 import { sql } from './config/db.js';
+import rateLimiter from './middleware/rateLimiter.js';
 
 dontenv.config();
 
@@ -9,6 +10,9 @@ const PORT = process.env.PORT;
 const app = express();
 
 // middleware
+
+// Disabling the rateLimiter middleware as it seems to require paid account to use this feature from Upstash
+// app.use(rateLimiter);
 app.use(express.json());
 
 async function initDB() {
