@@ -36,6 +36,13 @@ export default function SignUpScreen() {
       // and capture OTP code
       setPendingVerification(true);
     } catch (err) {
+      if (err.errors?.[0]?.code === 'form_identifier_exists') {
+        setError('This email address is already in use.');
+      } else if (err.errors?.[0]?.longMessage) {
+        setError(err.errors[0].longMessage);
+      } else {
+        setError('An error occurred. Please try again later.');
+      }
       // See https://clerk.com/docs/custom-flows/error-handling
       // for more info on error handling
       console.error(JSON.stringify(err, null, 2));

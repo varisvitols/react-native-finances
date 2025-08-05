@@ -38,6 +38,13 @@ export default function Page() {
         console.error(JSON.stringify(signInAttempt, null, 2));
       }
     } catch (err) {
+      if (err.errors?.[0]?.code === 'form_password_incorrect') {
+        setError('Password is incorrect. Please try again.');
+      } else if (err.errors?.[0]?.longMessage) {
+        setError(err.errors[0].longMessage);
+      } else {
+        setError('An error occurred. Please check your details and try again.');
+      }
       // See https://clerk.com/docs/custom-flows/error-handling
       // for more info on error handling
       console.error(JSON.stringify(err, null, 2));
